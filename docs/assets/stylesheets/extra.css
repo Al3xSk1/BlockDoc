@@ -1,0 +1,829 @@
+/* An original Book & Quill-inspired journal. All assets are served locally. */
+@font-face {
+  font-family: "Pixelify Sans";
+  src: url("../fonts/pixelify-sans.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+}
+
+:root {
+  --book-pixel-font: "Pixelify Sans", "Courier New", monospace;
+  --book-reading-font: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+  --book-ui-font: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --md-text-font: var(--book-reading-font);
+  --md-code-font: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+}
+
+[data-md-color-scheme="default"] {
+  color-scheme: light;
+  --md-default-bg-color: #f3e7cb;
+  --md-default-fg-color: #3e3022;
+  --md-default-fg-color--light: #75634c;
+  --md-default-fg-color--lighter: #8d795c;
+  --md-default-fg-color--lightest: #d3c09a;
+  --md-primary-fg-color: #30251f;
+  --md-primary-fg-color--light: #48362a;
+  --md-primary-fg-color--dark: #231b17;
+  --md-primary-bg-color: #f3e4c5;
+  --md-primary-bg-color--light: #ccba9c;
+  --md-accent-fg-color: #794231;
+  --md-accent-fg-color--transparent: #79423112;
+  --md-typeset-a-color: #415b36;
+  --md-code-bg-color: #e8d9b7;
+  --md-code-fg-color: #46341f;
+  --book-desk: #292620;
+  --book-desk-line: #ffffff03;
+  --book-cover: #6a4633;
+  --book-cover-edge: #251b15;
+  --book-cover-shadow: #423023;
+  --book-paper: #f3e7cb;
+  --book-paper-light: #fff5dc;
+  --book-paper-edge: #b6a17b;
+  --book-crease: #795b2829;
+  --book-rule: #c9b48a;
+  --book-wash: #e7d8b8;
+  --book-muted: #75634c;
+  --book-forest: #415b36;
+  --book-ribbon: #984b37;
+  --book-on-cover: #e9d8b6;
+  --book-on-cover-muted: #beac8f;
+  --book-tab: #49382b;
+  --book-note: #e7e4c7;
+}
+
+[data-md-color-scheme="slate"] {
+  color-scheme: dark;
+  --md-hue: 35;
+  --md-default-bg-color: #292824;
+  --md-default-fg-color: #e7dabd;
+  --md-default-fg-color--light: #b9aa8e;
+  --md-default-fg-color--lighter: #9c8b70;
+  --md-default-fg-color--lightest: #554c3d;
+  --md-primary-fg-color: #1b1816;
+  --md-primary-fg-color--light: #302720;
+  --md-primary-fg-color--dark: #100e0d;
+  --md-primary-bg-color: #e7dabd;
+  --md-primary-bg-color--light: #b9aa8e;
+  --md-accent-fg-color: #d4ad7d;
+  --md-accent-fg-color--transparent: #d4ad7d12;
+  --md-typeset-a-color: #b9cca0;
+  --md-code-bg-color: #201f1d;
+  --md-code-fg-color: #e0cba6;
+  --book-desk: #141413;
+  --book-desk-line: #ffffff02;
+  --book-cover: #493529;
+  --book-cover-edge: #0c0b09;
+  --book-cover-shadow: #2a211b;
+  --book-paper: #292824;
+  --book-paper-light: #34312a;
+  --book-paper-edge: #66573f;
+  --book-crease: #00000045;
+  --book-rule: #5c503d;
+  --book-wash: #343128;
+  --book-muted: #b9aa8e;
+  --book-forest: #b9cca0;
+  --book-ribbon: #9c5941;
+  --book-on-cover: #e3d2b0;
+  --book-on-cover-muted: #b6a68c;
+  --book-tab: #302820;
+  --book-note: #303529;
+}
+
+/* A quiet desk around the book, with no external textures or scripts. */
+body {
+  background-color: var(--book-desk);
+}
+
+.md-container {
+  background-color: var(--book-desk);
+  background-image: repeating-linear-gradient(0deg, transparent 0 5px, var(--book-desk-line) 5px 6px);
+}
+
+.md-grid {
+  max-width: 64rem;
+}
+
+.md-header {
+  font-family: var(--book-ui-font);
+  border-bottom: 1px solid #ffffff0d;
+  box-shadow: 0 2px 0 #00000020;
+}
+
+.md-header__title {
+  font-family: var(--book-pixel-font);
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.md-header__button.md-logo img {
+  width: 1.65rem;
+  height: 1.65rem;
+  image-rendering: pixelated;
+}
+
+.md-tabs {
+  padding-top: .25rem;
+  border-bottom: 3px solid var(--book-cover-shadow);
+}
+
+.md-tabs__list {
+  gap: .3rem;
+}
+
+.md-tabs__item {
+  height: 2rem;
+  padding: 0;
+}
+
+.md-tabs__link {
+  margin-top: 0;
+  padding: .45rem .9rem .5rem;
+  color: var(--book-on-cover);
+  background: var(--book-tab);
+  clip-path: polygon(0 4px, 4px 4px, 4px 0, calc(100% - 4px) 0, calc(100% - 4px) 4px, 100% 4px, 100% 100%, 0 100%);
+  font-family: var(--book-pixel-font);
+  font-size: .82rem;
+  opacity: .8;
+}
+
+.md-tabs__item--active .md-tabs__link {
+  color: var(--md-default-fg-color);
+  background: var(--book-paper);
+  opacity: 1;
+}
+
+.md-tabs__link:hover {
+  opacity: 1;
+}
+
+.md-search {
+  font-family: var(--book-ui-font);
+}
+
+.md-search__form {
+  background-color: #00000026;
+  border: 1px solid #ffffff24;
+  border-radius: 2px;
+}
+
+.md-search__input {
+  font-family: var(--book-ui-font);
+}
+
+.md-search-result .md-typeset {
+  font-family: var(--book-ui-font);
+  font-size: .75rem;
+}
+
+.md-search-result .md-typeset h1,
+.md-search-result .md-typeset h2 {
+  font-family: var(--book-pixel-font);
+}
+
+.md-main__inner {
+  margin-top: 1.8rem;
+  margin-bottom: 2.8rem;
+}
+
+/* The cover, stacked page edges, and binding are shared by every article. */
+.md-content {
+  position: relative;
+  min-width: 0;
+  color: var(--md-default-fg-color);
+  background: var(--book-paper) url("../paper-grain.svg");
+  border: 1px solid var(--book-paper-edge);
+  box-shadow:
+    0 2px 0 var(--book-paper-edge),
+    0 4px 0 var(--book-paper),
+    0 5px 0 var(--book-paper-edge),
+    0 0 0 .35rem var(--book-cover),
+    0 0 0 .42rem var(--book-cover-edge),
+    0 .35rem 0 .42rem var(--book-cover-shadow),
+    0 .4rem 0 .42rem var(--book-cover-edge),
+    0 1rem 1.5rem #00000035;
+}
+
+.md-content::before {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: .5rem;
+  background: linear-gradient(90deg, var(--book-crease), transparent);
+  content: "";
+  pointer-events: none;
+}
+
+.md-content::after {
+  position: absolute;
+  z-index: 1;
+  top: -.4rem;
+  right: 1.6rem;
+  width: .8rem;
+  height: 2.4rem;
+  background-color: var(--book-ribbon);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 82%, 0 100%);
+  content: "";
+  pointer-events: none;
+}
+
+.md-content__inner {
+  margin: 0;
+  padding: 1.9rem 2rem 2.3rem;
+}
+
+.md-typeset {
+  font-size: .86rem;
+  line-height: 1.8;
+}
+
+.md-typeset h1,
+.md-typeset h2,
+.md-typeset h3 {
+  color: var(--md-default-fg-color);
+  font-family: var(--book-pixel-font);
+  font-weight: 500;
+  line-height: 1.3;
+  letter-spacing: 0;
+}
+
+.md-typeset h1 {
+  margin-bottom: .8em;
+  font-size: 1.9rem;
+}
+
+.md-typeset h2 {
+  margin-top: 1.6em;
+  font-size: 1.35rem;
+}
+
+.md-typeset h3 {
+  font-size: 1.05rem;
+}
+
+.md-typeset hr {
+  border-bottom-color: var(--book-rule);
+}
+
+.md-typeset a:not(.md-button):hover {
+  text-decoration: underline;
+  text-underline-offset: .2em;
+}
+
+.md-typeset blockquote {
+  color: var(--book-muted);
+  border-left: 3px solid var(--book-rule);
+}
+
+/* Chapter menus sit outside the page, like notes beside an open book. */
+.md-sidebar {
+  color: var(--book-on-cover);
+  font-family: var(--book-ui-font);
+}
+
+.md-nav {
+  font-size: .69rem;
+}
+
+.md-sidebar .md-nav__title,
+.md-sidebar .md-nav__item--section > .md-nav__link {
+  color: var(--book-on-cover);
+  background: transparent;
+  box-shadow: none;
+  font-family: var(--book-pixel-font);
+  font-size: .82rem;
+  font-weight: 400;
+}
+
+.md-sidebar .md-nav__link {
+  padding-block: .2rem;
+  color: var(--book-on-cover-muted);
+}
+
+.md-sidebar .md-nav__link:hover,
+.md-sidebar .md-nav__link--active {
+  color: var(--book-on-cover);
+}
+
+.md-sidebar .md-nav__link--active {
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-color: var(--book-ribbon);
+  text-underline-offset: .25em;
+}
+
+.md-nav__link--passed {
+  color: var(--book-on-cover-muted);
+}
+
+/* Square, inset controls recall the game's inventory buttons. */
+.md-typeset .md-button {
+  padding: .55em 1em;
+  color: var(--md-default-fg-color);
+  background: var(--book-wash);
+  border: 1px solid var(--book-paper-edge);
+  border-radius: 0;
+  box-shadow: inset 2px 2px 0 #ffffff25, inset -2px -2px 0 #00000014, 0 2px 0 var(--book-paper-edge);
+  font-family: var(--book-pixel-font);
+  font-size: .83rem;
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+.md-typeset .md-button--primary {
+  color: #fff0d1;
+  background: #654733;
+  border-color: #38281d;
+  box-shadow: inset 2px 2px 0 #ffffff25, inset -2px -2px 0 #00000030, 0 2px 0 #38281d;
+}
+
+.md-typeset .md-button:hover,
+.md-typeset .md-button:focus-visible {
+  color: var(--md-default-fg-color);
+  background: var(--book-paper-light);
+  border-color: var(--book-paper-edge);
+}
+
+/* Home is a real two-page composition, with a central crease and folios. */
+.md-main__inner:has(.journal-home) {
+  max-width: 57rem;
+}
+
+.md-content__inner:has(.journal-home) {
+  padding: 0;
+}
+
+.md-content:has(.journal-home)::before {
+  display: none;
+}
+
+.book-spread {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.book-spread::after {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 1.2rem;
+  background: linear-gradient(90deg, transparent, var(--book-crease) 45%, var(--book-rule) 50%, var(--book-crease) 55%, transparent);
+  content: "";
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.book-page {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 1.5rem 2.3rem 1.2rem;
+}
+
+.book-page--opening {
+  text-align: center;
+  background: linear-gradient(90deg, transparent 30%, var(--book-paper-light) 75%, transparent);
+}
+
+.book-page--contents {
+  background: linear-gradient(90deg, transparent, var(--book-paper-light) 25%, transparent 70%);
+}
+
+.md-typeset .book-running-title {
+  display: flex;
+  justify-content: space-between;
+  gap: .5rem;
+  margin: 0 0 1.4rem;
+  padding-bottom: .6rem;
+  color: var(--book-muted);
+  border-bottom: 1px solid var(--book-rule);
+  font-family: var(--book-pixel-font);
+  font-size: .7rem;
+  line-height: 1.4;
+  text-align: left;
+}
+
+.book-emblem {
+  align-self: center;
+  width: 6rem;
+  height: 6rem;
+  margin: .4rem 0 .9rem;
+  image-rendering: pixelated;
+}
+
+.book-page--opening > p:has(.book-emblem) {
+  margin: 0;
+  line-height: 0;
+}
+
+.md-typeset .book-kicker {
+  margin: 0 0 .6rem;
+  color: var(--book-muted);
+  font-family: var(--book-pixel-font);
+  font-size: .65rem;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+.md-typeset .book-page--opening h1 {
+  max-width: 13ch;
+  margin: 0 auto .65rem;
+  font-size: clamp(2rem, 3.5vw, 2.65rem);
+  font-weight: 500;
+  line-height: 1.08;
+  text-wrap: balance;
+}
+
+.book-page--opening h1 .headerlink {
+  display: none;
+}
+
+.md-typeset .book-deck {
+  margin: .4rem auto 1.1rem;
+  max-width: 28ch;
+  color: var(--book-muted);
+  font-size: .87rem;
+  line-height: 1.7;
+}
+
+.md-typeset .book-actions {
+  margin: 0 0 1.2rem;
+}
+
+.md-typeset .book-inscription {
+  margin: .3rem 0 1.2rem;
+  color: var(--book-muted);
+  font-size: .78rem;
+  font-style: italic;
+}
+
+.book-inscription::before {
+  display: block;
+  width: 2.8rem;
+  height: 1px;
+  margin: 0 auto 1rem;
+  background: var(--book-rule);
+  content: "";
+}
+
+.md-typeset .book-edition {
+  margin: auto 0 0;
+  color: var(--book-muted);
+  font-family: var(--book-pixel-font);
+  font-size: .68rem;
+  line-height: 1.8;
+}
+
+.md-typeset .book-page--contents h2 {
+  margin: .2rem 0 1rem;
+  font-size: 1.65rem;
+}
+
+.md-typeset .chapter-list ol {
+  margin: 0;
+  list-style: none;
+  counter-reset: chapter;
+}
+
+.md-typeset .chapter-list li {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1.8rem minmax(0, 1fr);
+  column-gap: .35rem;
+  margin: 0;
+  padding: .5rem 0;
+  border-bottom: 1px dotted var(--book-rule);
+  counter-increment: chapter;
+}
+
+.chapter-list li::before {
+  grid-column: 1;
+  grid-row: 1 / span 2;
+  padding-top: .15rem;
+  color: var(--book-muted);
+  font-family: var(--book-pixel-font);
+  font-size: .75rem;
+  content: counter(chapter, upper-roman);
+}
+
+.md-typeset .chapter-list li p {
+  grid-column: 2;
+  margin: 0;
+  font-size: .76rem;
+  line-height: 1.5;
+}
+
+.chapter-list strong {
+  font-family: var(--book-pixel-font);
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.chapter-list a {
+  color: var(--md-default-fg-color);
+}
+
+.chapter-list a::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+}
+
+.chapter-list li:hover a {
+  color: var(--md-typeset-a-color);
+  text-decoration: underline;
+  text-underline-offset: .2em;
+}
+
+.md-typeset .book-margin-note {
+  margin: 1.2rem 0 .25rem;
+  padding-left: .7rem;
+  color: var(--book-muted);
+  border-left: 2px solid var(--book-rule);
+  font-size: .73rem;
+  font-style: italic;
+  line-height: 1.7;
+}
+
+.book-margin-note p {
+  margin: 0;
+}
+
+.md-typeset .book-folio {
+  margin: auto 0 0;
+  padding-top: 1.4rem;
+  color: var(--book-muted);
+  font-family: var(--book-pixel-font);
+  font-size: .8rem;
+  line-height: 1;
+  text-align: center;
+}
+
+/* Reference content retains the same paper, ruled tables, and margin notes. */
+.md-typeset .grid.cards > ul > li {
+  border: 1px solid var(--book-rule);
+  border-radius: 0;
+  background: var(--book-wash);
+  box-shadow: inset 0 0 0 3px var(--book-paper);
+}
+
+.md-typeset .grid.cards > ul > li:hover {
+  border-color: var(--book-forest);
+  box-shadow: inset 0 0 0 3px var(--book-paper);
+}
+
+.md-typeset table:not([class]) {
+  display: table;
+  width: 100%;
+  background: transparent;
+  border: 1px solid var(--book-rule);
+  border-radius: 0;
+  box-shadow: none;
+  font-family: var(--book-ui-font);
+  font-size: .7rem;
+}
+
+.md-typeset table:not([class]) th {
+  min-width: 4.5rem;
+  color: var(--md-default-fg-color);
+  background: var(--book-wash);
+  font-weight: 600;
+}
+
+.md-typeset table:not([class]) :is(th, td) {
+  padding: .65rem .75rem;
+  border-bottom-color: var(--book-rule);
+}
+
+.md-typeset .md-typeset__table {
+  display: block;
+}
+
+.md-typeset :is(.admonition, details) {
+  background: var(--book-paper);
+  border-radius: 0;
+  box-shadow: none;
+  font-family: var(--book-ui-font);
+  font-size: .72rem;
+}
+
+.md-typeset :is(.admonition.tip, details.tip, .admonition.note, details.note) {
+  border-color: var(--book-rule);
+}
+
+.md-typeset :is(.tip > .admonition-title, .tip > summary, .note > .admonition-title, .note > summary) {
+  background: var(--book-note);
+}
+
+.md-typeset :is(.tip > .admonition-title, .tip > summary, .note > .admonition-title, .note > summary)::before {
+  background-color: var(--book-forest);
+}
+
+.md-typeset .tabbed-labels > label {
+  font-family: var(--book-pixel-font);
+  font-size: .85rem;
+}
+
+.md-typeset pre > code {
+  border: 1px solid var(--book-rule);
+  border-radius: 0;
+}
+
+.md-typeset kbd {
+  background: var(--book-wash);
+  border-color: var(--book-rule);
+  border-radius: 1px;
+  box-shadow: 0 2px 0 var(--book-paper-edge);
+}
+
+.md-typeset mark {
+  color: var(--md-default-fg-color);
+  background: #bc934d45;
+}
+
+.md-tooltip,
+.md-top {
+  font-family: var(--book-ui-font);
+}
+
+.md-footer,
+.md-footer-meta {
+  color: var(--book-on-cover);
+  background: var(--book-desk);
+}
+
+.md-footer__inner {
+  border-top: 1px solid #ffffff13;
+}
+
+.md-footer__title {
+  font-family: var(--book-pixel-font);
+  font-size: 1rem;
+}
+
+.md-footer__direction,
+.md-copyright {
+  color: var(--book-on-cover-muted);
+  font-family: var(--book-ui-font);
+}
+
+.md-copyright__highlight {
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--md-accent-fg-color);
+  outline-offset: 3px;
+}
+
+.md-header :focus-visible,
+.md-sidebar :focus-visible {
+  outline-color: var(--book-on-cover);
+}
+
+@media (min-width: 76.25em) {
+  .md-sidebar .md-nav--lifted > .md-nav__list > .md-nav__item--active > .md-nav__link {
+    color: var(--book-on-cover);
+    background: var(--book-desk);
+    box-shadow: 0 0 .4rem .4rem var(--book-desk);
+    font-family: var(--book-pixel-font);
+    font-size: .82rem;
+  }
+}
+
+@media (max-width: 76.234375em) {
+  .md-main__inner {
+    margin-inline: 1rem;
+  }
+
+  .md-main__inner:has(.journal-home) {
+    margin-inline: auto;
+    width: calc(100% - 2rem);
+  }
+
+  .md-nav--primary {
+    color: var(--md-default-fg-color);
+    background: var(--book-paper) url("../paper-grain.svg");
+    font-family: var(--book-ui-font);
+  }
+
+  .md-nav--primary .md-nav__link,
+  .md-nav--primary .md-nav__link:hover,
+  .md-nav--primary .md-nav__item--section > .md-nav__link {
+    color: var(--md-default-fg-color);
+  }
+
+  .md-nav--primary .md-nav__title {
+    color: var(--md-default-fg-color);
+    background: var(--book-wash);
+    font-family: var(--book-pixel-font);
+  }
+
+  .md-nav--primary .md-nav__title[for="__drawer"] {
+    color: var(--book-on-cover);
+    background: var(--md-primary-fg-color);
+  }
+
+  .md-nav--primary .md-nav__link--active {
+    color: var(--md-typeset-a-color);
+  }
+
+  .md-nav--primary :focus-visible {
+    outline-color: var(--md-accent-fg-color);
+  }
+}
+
+@media (max-width: 60em) {
+  .book-page {
+    padding-inline: 1.6rem;
+  }
+}
+
+@media (max-width: 44.984375em) {
+  .md-main__inner,
+  .md-main__inner:has(.journal-home) {
+    width: calc(100% - 1.6rem);
+    margin: 1.2rem .8rem 2rem;
+  }
+
+  .md-content__inner {
+    padding: 1.8rem 1.1rem;
+  }
+
+  .book-spread {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .book-spread::after {
+    display: none;
+  }
+
+  .book-page {
+    padding: 1.3rem 1.5rem 1.1rem;
+  }
+
+  .book-page--opening {
+    min-height: 32rem;
+  }
+
+  .book-page--contents {
+    border-top: 1px solid var(--book-rule);
+    box-shadow: inset 0 4px 0 var(--book-wash), inset 0 5px 0 var(--book-rule);
+  }
+
+  .md-typeset .book-page--opening h1 {
+    font-size: 2.2rem;
+  }
+
+  .md-typeset .book-running-title {
+    font-size: .65rem;
+  }
+
+  .md-typeset .book-page--contents h2 {
+    margin-top: .5rem;
+  }
+
+  .md-content::after {
+    right: 1rem;
+    height: 2rem;
+  }
+}
+
+@media print {
+  [data-md-color-scheme] {
+    --md-default-fg-color: #3e3022;
+    --md-default-fg-color--light: #75634c;
+    --md-typeset-a-color: #415b36;
+    --md-code-fg-color: #46341f;
+    --md-code-bg-color: #f3efe6;
+    --book-muted: #75634c;
+    --book-paper: #ffffff;
+    --book-paper-light: #ffffff;
+    --book-wash: #f3efe6;
+    --book-rule: #c9b48a;
+    --book-paper-edge: #b6a17b;
+    --book-desk: #ffffff;
+    --book-desk-line: transparent;
+  }
+
+  .md-content {
+    background: white;
+    border: 0;
+    box-shadow: none;
+  }
+
+  .md-content::before,
+  .md-content::after,
+  .book-spread::after {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    animation-duration: .01ms !important;
+    transition-duration: .01ms !important;
+  }
+}

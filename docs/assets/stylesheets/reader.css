@@ -1,0 +1,365 @@
+/* Progressive enhancement: the original article is the no-JavaScript view. */
+.md-content.reader-content {
+  background: none;
+  border: 0;
+  box-shadow: none;
+}
+
+.md-content.reader-content::before,
+.md-content.reader-content::after {
+  display: none;
+}
+
+.reader-content > .md-content__inner {
+  padding: 0;
+}
+
+.reader-active .md-sidebar--secondary,
+.reader-enhanced .md-footer__inner {
+  display: none;
+}
+
+.reader-root {
+  min-width: 0;
+  color: var(--book-on-cover);
+}
+
+.reader-toolbar,
+.reader-controls,
+.reader-chapters {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .75rem;
+  font-family: var(--book-ui-font);
+  font-size: .65rem;
+}
+
+.reader-toolbar {
+  margin-bottom: .85rem;
+}
+
+.reader-title {
+  overflow: hidden;
+  font-family: var(--book-pixel-font);
+  font-size: .85rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.reader-root button,
+.reader-root .reader-chapters a {
+  padding: .4rem .7rem;
+  color: var(--book-on-cover);
+  background: var(--book-tab);
+  border: 1px solid var(--book-cover);
+  border-radius: 0;
+  font-family: var(--book-pixel-font);
+  font-size: .75rem;
+  line-height: 1.4;
+  cursor: pointer;
+}
+
+.reader-root button:hover,
+.reader-root button:focus-visible,
+.reader-root .reader-chapters a:hover {
+  color: var(--md-default-fg-color);
+  background: var(--book-paper);
+}
+
+.reader-root button:disabled {
+  opacity: .35;
+  cursor: default;
+}
+
+.reader-mode {
+  flex-shrink: 0;
+}
+
+.reader-cover {
+  position: relative;
+  margin: 0 auto;
+  background: var(--book-paper);
+  border: 1px solid var(--book-paper-edge);
+  box-shadow: 0 2px 0 var(--book-paper-edge), 0 4px 0 var(--book-paper),
+    0 5px 0 var(--book-paper-edge), 0 0 0 6px var(--book-cover),
+    0 0 0 7px var(--book-cover-edge), 0 9px 0 7px var(--book-cover-shadow),
+    0 14px 24px #00000040;
+}
+
+.reader-stage {
+  position: relative;
+  overflow: hidden;
+  touch-action: pan-y;
+}
+
+.reader-leaf {
+  position: relative;
+  overflow: hidden;
+  color: var(--md-default-fg-color);
+  background: var(--book-paper) url("../paper-grain.svg");
+  border: 1px solid var(--book-paper-edge);
+}
+
+/* Turning sheets and their temporary copies must stay outside normal flow. */
+.reader-leaf.stf__item {
+  position: absolute;
+}
+
+.reader-leaf.--left {
+  box-shadow: inset -12px 0 18px -18px #3c2600;
+}
+
+.reader-leaf.--right {
+  box-shadow: inset 12px 0 18px -18px #3c2600;
+}
+
+.reader-running {
+  position: absolute;
+  top: 16px;
+  right: 28px;
+  left: 28px;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 8px;
+  overflow: hidden;
+  color: var(--book-muted);
+  border-bottom: 1px solid var(--book-rule);
+  font-family: var(--book-pixel-font);
+  font-size: .6rem;
+  line-height: 1.3;
+  white-space: nowrap;
+}
+
+.reader-running span:last-child {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.reader-leaf__body {
+  position: absolute;
+  inset: 56px 28px 42px;
+  overflow: hidden;
+  font-size: .8rem;
+  line-height: 1.7;
+}
+
+.reader-leaf__body > :first-child {
+  margin-top: 0;
+}
+
+.reader-leaf__body > :last-child {
+  margin-bottom: 0;
+}
+
+.reader-leaf__body h1 {
+  font-size: 1.55rem;
+}
+
+.reader-leaf__body h2 {
+  margin-top: 1rem;
+  font-size: 1.2rem;
+}
+
+.reader-leaf__body img {
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.reader-leaf .reader-folio {
+  position: absolute;
+  right: 0;
+  bottom: 12px;
+  left: 0;
+  margin: 0;
+  color: var(--book-muted);
+  font-family: var(--book-pixel-font);
+  font-size: .7rem;
+  text-align: center;
+}
+
+.reader-leaf__body.book-page--opening {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: none;
+}
+
+.reader-leaf .book-emblem {
+  width: 3.5rem;
+  height: 3.5rem;
+  margin: .2rem 0 .4rem;
+}
+
+.reader-leaf .book-kicker {
+  font-size: .55rem;
+}
+
+.reader-leaf .book-page--opening h1 {
+  max-width: 15ch;
+  font-size: 1.8rem;
+}
+
+.reader-leaf .book-deck {
+  max-width: 32ch;
+  margin-bottom: .75rem;
+  font-size: .8rem;
+}
+
+.reader-leaf .book-inscription {
+  margin-block: .4rem;
+  font-size: .7rem;
+}
+
+.reader-leaf .book-inscription::before {
+  margin-bottom: .4rem;
+}
+
+.reader-leaf .book-edition {
+  margin-top: auto;
+  font-size: .6rem;
+}
+
+.reader-leaf .book-actions {
+  margin-bottom: .5rem;
+}
+
+.reader-leaf .book-page--contents h2 {
+  margin-top: 0;
+  font-size: 1.35rem;
+}
+
+.reader-leaf .chapter-list li {
+  padding-block: .3rem;
+}
+
+.reader-leaf .chapter-list li p {
+  font-size: .68rem;
+}
+
+.reader-leaf .chapter-list strong {
+  font-size: .9rem;
+}
+
+.reader-leaf .book-margin-note {
+  margin-top: .6rem;
+  font-size: .65rem;
+}
+
+.reader-scroll-block {
+  max-height: 100%;
+  overflow: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+}
+
+.reader-measure {
+  position: fixed;
+  top: 0;
+  left: -100000px;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.reader-controls {
+  max-width: 52rem;
+  margin: 1.1rem auto 0;
+}
+
+.reader-position {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: .2rem .4rem;
+  color: var(--book-on-cover);
+  text-align: center;
+}
+
+.reader-position input {
+  width: 3rem;
+  padding: .2rem;
+  color: var(--book-on-cover);
+  background: var(--book-tab);
+  border: 1px solid var(--book-cover);
+  font: inherit;
+  text-align: center;
+}
+
+.reader-hint {
+  margin: .5rem 0 .3rem;
+  color: var(--book-on-cover-muted);
+  font-family: var(--book-ui-font);
+  font-size: .58rem;
+  text-align: center;
+}
+
+.reader-chapters {
+  margin-top: .8rem;
+}
+
+.reader-chapters a:only-child:last-child {
+  margin-left: auto;
+}
+
+.reader-chapters a:first-child {
+  margin-right: auto;
+}
+
+.reader-root .reader-chapters a {
+  font-size: .65rem;
+}
+
+.reader-article {
+  padding: 2rem;
+  color: var(--md-default-fg-color);
+  background: var(--book-paper) url("../paper-grain.svg");
+  border: 1px solid var(--book-paper-edge);
+}
+
+.reader-root :focus-visible {
+  outline-color: var(--book-on-cover);
+}
+
+.reader-leaf :focus-visible,
+.reader-article :focus-visible {
+  outline-color: var(--md-accent-fg-color);
+}
+
+@media (max-width: 44.984375em) {
+  .reader-leaf__body {
+    inset-inline: 20px;
+    font-size: .77rem;
+  }
+
+  .reader-running {
+    inset-inline: 20px;
+  }
+
+  .reader-controls {
+    gap: .4rem;
+  }
+
+  .reader-root button {
+    padding: .4rem .5rem;
+    font-size: .68rem;
+  }
+
+  .reader-article {
+    padding: 1.2rem;
+  }
+}
+
+@media print {
+  .reader-toolbar,
+  .reader-chapters {
+    display: none;
+  }
+
+  .reader-article {
+    padding: 0;
+    background: white;
+    border: 0;
+  }
+}

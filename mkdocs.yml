@@ -1,0 +1,155 @@
+site_name: BlockDoc
+site_description: A Minecraft field journal for blocks, items, mechanics, and discoveries worth keeping.
+# CI supplies the actual Pages URL, including /repository/ for project sites.
+site_url: !ENV [SITE_URL, "http://127.0.0.1:8000/"]
+use_directory_urls: true
+strict: true
+
+# Uncomment both after creating your GitHub repository to enable source/edit links.
+# repo_url: https://github.com/YOUR-USERNAME/BlockDoc
+# edit_uri: edit/main/docs/
+
+theme:
+  name: material
+  language: en
+  logo: assets/logo.svg
+  favicon: assets/logo.svg
+  # Typography is defined in extra.css; the pixel heading font is self-hosted.
+  font: false
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/weather-night
+        name: Read by moonlight
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/weather-sunny
+        name: Read by daylight
+  features:
+    - navigation.instant
+    - navigation.instant.prefetch
+    - navigation.instant.progress
+    - navigation.tracking
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.sections
+    - navigation.indexes
+    # Leave navigation.expand disabled so deeper branches start collapsed.
+    - navigation.top
+    - navigation.footer
+    - search.suggest
+    - search.highlight
+    - search.share
+    - toc.follow
+    - content.code.copy
+    - content.code.annotate
+    - content.tabs.link
+    - content.tooltips
+
+plugins:
+  - search:
+      lang: en
+  - ezlinks:
+      wikilinks: true
+      warn_ambiguities: true
+  - minify:
+      minify_html: true
+
+markdown_extensions:
+  - abbr
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+      toc_depth: 3
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets:
+      check_paths: true
+      base_path: [docs]
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.keys
+  - pymdownx.mark
+  - pymdownx.tilde
+  # Also accept Obsidian's > [!note] callout syntax.
+  - obsidian_callouts
+
+validation:
+  nav:
+    omitted_files: warn
+    not_found: warn
+    absolute_links: warn
+  links:
+    not_found: warn
+    unrecognized_links: warn
+    anchors: warn
+
+extra_css:
+  - assets/stylesheets/extra.css
+  - assets/stylesheets/vendor/page-flip-2.0.7.css
+  - assets/stylesheets/reader.css
+
+extra_javascript:
+  - assets/javascripts/vendor/page-flip-2.0.7.js
+  - assets/javascripts/reader.js
+
+extra:
+  generator: false
+
+copyright: BlockDoc / An unofficial Minecraft reference.
+
+nav:
+  - Home: index.md
+  - Blocks:
+      - blocks/index.md
+      - Natural:
+          - blocks/natural/index.md
+          - Stone: blocks/natural/stone.md
+      - Building:
+          - blocks/building/index.md
+  - Items:
+      - items/index.md
+      - Tools:
+          - items/tools/index.md
+          - Pickaxes: items/tools/pickaxes.md
+      - Materials:
+          - items/materials/index.md
+  - Mechanics:
+      - mechanics/index.md
+      - Redstone:
+          - mechanics/redstone/index.md
+          - Signal strength: mechanics/redstone/signal-strength.md
+          - Components:
+              - mechanics/redstone/components/index.md
+              - Repeater: mechanics/redstone/components/repeater.md
+      - Enchanting:
+          - mechanics/enchanting/index.md
+  - Guides:
+      - guides/index.md
+      - Your first day: guides/getting-started.md
+  - Recipes:
+      - recipes/index.md
+  - Reference:
+      - reference/index.md
+      - Writing guide: reference/writing.md
